@@ -4,6 +4,7 @@ import
 {
     BsAlexa,
     BsFilter,
+    BsFilterCircle,
     BsGrid1X2Fill, 
     BsPerson, 
 }
@@ -27,10 +28,13 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                         <a href='/'><span className='icon'><BsGrid1X2Fill/></span> <span>Dashboard</span></a>
                     </li>
                     <li className='sidebar-list-item'>
-                        <a href='/filter'><span className='icon'><BsFilter/></span> <span>Filter</span></a>
+                        <a href='/domainFilter'><span className='icon'><BsFilter/></span> <span>Filter (by domain)</span></a>
                     </li>
                     <li className='sidebar-list-item'>
-                        <a href='/createuser'><span className='icon'><BsPerson/></span> <span>Create User</span></a>
+                        <a href='/availabilityFilter'><span className='icon'><BsFilterCircle/></span> <span>Filter (by availability)</span></a>
+                    </li>
+                    <li className='sidebar-list-item'>
+                        <a href='/createUser'><span className='icon'><BsPerson/></span> <span>Create User</span></a>
                     </li>
                 </form>
             </div>

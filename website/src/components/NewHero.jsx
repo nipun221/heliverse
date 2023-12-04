@@ -13,6 +13,7 @@ import Mockdata from '../apis/Mockdata'
 import { Link, Pagination } from '@mui/material'
 import { BsGithub, BsJustify } from 'react-icons/bs'
 import PropTypes from 'prop-types';
+import '../styles/Hero.css'
   
 const statusObj = {
 false: { color: 'error' },
@@ -20,15 +21,15 @@ true: { color: 'success' }
 }
   
 
-function Hero({OpenSidebar}) {
-  const [domain, setDomain] = useState('Sales');
+function NewHero({OpenSidebar}) {
+  const [available, setAvailable] = useState('true');
   const [rows, setRows] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const handleFetchData = async () => {
     try {
-      const response = await Mockdata.get(`/domain/${domain}?page=${currentPage}`);
+      const response = await Mockdata.get(`/available/${available}?page=${currentPage}`);
       setRows(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (err) {
@@ -36,8 +37,8 @@ function Hero({OpenSidebar}) {
     }
   };
 
-  const handleDomainChange = (selectedDomain) => {
-    setDomain(selectedDomain);
+  const handleAvailableChange = (selectedAvailable) => {
+    setAvailable(selectedAvailable);
     setCurrentPage(1);
   };
 
@@ -47,11 +48,11 @@ function Hero({OpenSidebar}) {
 
   useEffect(() => {
     handleFetchData();
-  }, [currentPage, domain]);
+  }, [currentPage, available]);
 
   useEffect(() => {
-    handleFetchData(); // Fetch data whenever domain changes
-  }, [domain]);
+    handleFetchData(); // Fetch data whenever available changes
+  }, [available]);
 
   return (
     <main className='main-container-hero'>
@@ -60,20 +61,20 @@ function Hero({OpenSidebar}) {
               <BsJustify className='icon' onClick={OpenSidebar}/>
           </div>
           <div className='header-left'>
-            <div className="wrapper">
+            <div className="new-wrapper">
               <div className="option">
                 <input
                   className="input"
                   type="radio"
                   name="btn"
-                  value="Sales"
+                  value="true"
                   defaultChecked
                   onClick={() => {
-                    handleDomainChange('Sales');
+                    handleAvailableChange('true');
                   }}
                 />
                 <div className="btn">
-                  <span className="span">Sales</span>
+                  <span className="span">Available</span>
                 </div>
               </div>
               <div className="option">
@@ -81,83 +82,13 @@ function Hero({OpenSidebar}) {
                   className="input"
                   type="radio"
                   name="btn"
-                  value="Finance"
+                  value="false"
                   onClick={() => {
-                    handleDomainChange('Finance');
+                    handleAvailableChange('false');
                   }}
                 />
                 <div className="btn">
-                  <span className="span">Finance</span>
-                </div>
-              </div>
-              <div className="option">
-                <input
-                  className="input"
-                  type="radio"
-                  name="btn"
-                  value="Marketing"
-                  onClick={() => {
-                    handleDomainChange('Marketing');
-                  }}
-                />
-                <div className="btn">
-                  <span className="span">Marketing</span>
-                </div>
-              </div>
-              <div className="option">
-                <input
-                  className="input"
-                  type="radio"
-                  name="btn"
-                  value="IT"
-                  onClick={() => {
-                    handleDomainChange('IT');
-                  }}
-                />
-                <div className="btn">
-                  <span className="span">IT</span>
-                </div>
-              </div>
-              <div className="option">
-                <input
-                  className="input"
-                  type="radio"
-                  name="btn"
-                  value="Management"
-                  onClick={() => {
-                    handleDomainChange('Management');
-                  }}
-                />
-                <div className="btn">
-                  <span className="span">Management</span>
-                </div>
-              </div>
-              <div className="option">
-                <input
-                  className="input"
-                  type="radio"
-                  name="btn"
-                  value="UI Designing"
-                  onClick={() => {
-                    handleDomainChange('UI Designing');
-                  }}
-                />
-                <div className="btn">
-                  <span className="span">UI Designing</span>
-                </div>
-              </div>
-              <div className="option">
-                <input
-                  className="input"
-                  type="radio"
-                  name="btn"
-                  value="Business Development"
-                  onClick={() => {
-                    handleDomainChange('Business Development');
-                  }}
-                />
-                <div className="btn">
-                  <span className="span">BD</span>
+                  <span className="span">Not Available</span>
                 </div>
               </div>
             </div>
@@ -231,8 +162,8 @@ function Hero({OpenSidebar}) {
   )
 }
 
-Hero.propTypes = {
+NewHero.propTypes = {
   OpenSidebar: PropTypes.func.isRequired,
 };
 
-export default Hero
+export default NewHero

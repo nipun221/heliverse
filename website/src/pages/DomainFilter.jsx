@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import Hero from '../components/Hero'
 
-const Filter = () => {
+const DomainFilter = () => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
 
   const OpenSidebar = () => {
@@ -19,4 +19,4 @@ const Filter = () => {
   )
 }
 
-export default Filter
+export default DomainFilter
