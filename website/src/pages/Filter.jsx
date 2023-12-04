@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
-import Home from '../components/Home'
+import Hero from '../components/Hero'
 
 const Filter = () => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -11,12 +10,11 @@ const Filter = () => {
   }
   return (
     <div className='grid-container'>
-      <Header OpenSidebar={OpenSidebar}/>
       <Sidebar 
         openSidebarToggle={openSidebarToggle} 
         OpenSidebar={OpenSidebar} 
       />
-      <Home />
+      <Hero OpenSidebar={OpenSidebar}/>
     </div>
   )
 }
