@@ -11,6 +11,8 @@ import TableContainer from '@mui/material/TableContainer'
 import { useEffect, useState } from 'react'
 import Mockdata from '../apis/Mockdata'
 import { Pagination } from '@mui/material'
+import { Link } from 'react-router-dom'
+import InfoIcon from '@mui/icons-material/Info';
   
 const statusObj = {
 false: { color: 'error' },
@@ -55,43 +57,47 @@ function Home() {
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Email</TableCell>
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Gender</TableCell>
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Status</TableCell>
+                    <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {rows.map(row => (
+              {rows.map(row => (
                 <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>
-                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Box
-                            component='img'
-                            src={row.avatar}
-                            sx={{ width: 50, height: 50, borderRadius: '50%' }}
-                            />
-                        </Box>
-                    </TableCell>
-                    <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                            <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.first_name} {row.last_name}</Typography>
-                            <Typography variant='caption'>{row.domain}</Typography>
-                        </Box>
-                    </TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.gender}</TableCell>
-                    <TableCell>
-                    <Chip
-                        label={row.available ? 'Available' : 'Not Available'}
-                        color={statusObj[row.available].color}
-                        sx={{
-                        height: 24,
-                        fontSize: '0.75rem',
-                        textTransform: 'capitalize',
-                        '& .MuiChip-label': { fontWeight: 500 }
-                        }}
-                    />
-                    </TableCell>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box
+                        component='img'
+                        src={row.avatar}
+                        sx={{ width: 50, height: 50, borderRadius: '50%' }}
+                        />
+                    </Box>
+                  </TableCell>
+                  <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.first_name} {row.last_name}</Typography>
+                        <Typography variant='caption'>{row.domain}</Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.gender}</TableCell>
+                  <TableCell>
+                  <Chip
+                      label={row.available ? 'Available' : 'Not Available'}
+                      color={statusObj[row.available].color}
+                      sx={{
+                      height: 24,
+                      fontSize: '0.75rem',
+                      textTransform: 'capitalize',
+                      '& .MuiChip-label': { fontWeight: 500 }
+                      }}
+                  />
+                  </TableCell>
+                  <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Link to={`/userDetails/${row.id}`}><InfoIcon style={{ color: '#1d2634' }}/></Link>
+                  </TableCell>
                 </TableRow>
-                ))}
+              ))}
             </TableBody>
             </Table>
             <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '20px', marginBottom: '20px' }}>

@@ -37,6 +37,31 @@ body {
   height: 100vh;
 }
 
+.grid-container-new {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1fr;
+  grid-template-rows: 0.2fr 3fr;
+  grid-template-areas:
+    'sidebar header header header'
+    'sidebar main main main';
+  height: 100vh;
+}
+
+.main {
+  grid-area: main;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -100px;
+}
+
+.form-title {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+}
+
+
 /* Header  */
 .header {
   grid-area: header;
@@ -232,4 +257,79 @@ body {
   .hedaer-left {
     display: none;
   }
+}
+
+/* Create User Form */
+.form-container {
+  width: 400px;
+  background-color: rgba(13, 3, 3, 0);
+  margin: auto;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  padding: 10px;
+  margin-top: 200px;
+  border: #263043;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.success-message {
+  font-family: "Roboto", sans-serif;
+  background-color: rgb(6, 3, 11);
+  padding: 25px;
+  color: white;
+  text-align: center;
+  border: #1d2634;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.form-field {
+  margin: 10px 0 10px 0;
+  padding: 15px;
+  font-size: 16px;
+  border: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.form-span {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: red;
+  margin-bottom: 15px;
+}
+
+.form-input {
+  background: #ffffff;
+}
+
+.error {
+  border-style: solid;
+  border: 2px solid #ffa4a4;
+}
+
+.form-button {
+  background: rgb(14, 36, 105);
+  color: white;
+  cursor: pointer;
+  border: #1d2634;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.form-button:disabled {
+  cursor: default;
+}
+
+.form-button:hover {
+  background: rgb(7, 33, 71);
 }
