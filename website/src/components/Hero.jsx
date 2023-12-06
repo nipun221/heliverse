@@ -10,9 +10,11 @@ import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
 import { useEffect, useState } from 'react'
 import Mockdata from '../apis/Mockdata'
-import { Link, Pagination } from '@mui/material'
+import { Pagination } from '@mui/material'
 import { BsGithub, BsJustify } from 'react-icons/bs'
 import PropTypes from 'prop-types';
+import InfoIcon from '@mui/icons-material/Info';
+import { Link } from 'react-router-dom'
   
 const statusObj = {
 false: { color: 'error' },
@@ -179,6 +181,7 @@ function Hero({OpenSidebar}) {
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Email</TableCell>
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Gender</TableCell>
                     <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Status</TableCell>
+                    <TableCell style={{ fontSize: '1rem', fontWeight: 'bold' }}>Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -213,6 +216,9 @@ function Hero({OpenSidebar}) {
                         '& .MuiChip-label': { fontWeight: 500 }
                         }}
                     />
+                    </TableCell>
+                    <TableCell sx={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
+                      <Link to={`/userDetails/${row.id}`}><InfoIcon style={{ color: '#1d2634' }}/></Link>
                     </TableCell>
                 </TableRow>
                 ))}

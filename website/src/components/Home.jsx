@@ -93,7 +93,7 @@ function Home() {
                       }}
                   />
                   </TableCell>
-                  <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                  <TableCell sx={{ display: 'flex', alignItems: 'center', marginTop: '10px' }}>
                     <Link to={`/userDetails/${row.id}`}><InfoIcon style={{ color: '#1d2634' }}/></Link>
                   </TableCell>
                 </TableRow>

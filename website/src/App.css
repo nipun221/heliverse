@@ -333,3 +333,83 @@ body {
 .form-button:hover {
   background: rgb(7, 33, 71);
 }
+
+/* User Details Page */
+
+.new_card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline-start: 150%;
+  padding-top: 50%;
+}
+
+.card-container {
+	background-color: hsl(185, 58%, 21%);
+	min-width: 350px;
+	max-width: 600px;
+	height: auto;
+	border-radius: 14px;
+	box-shadow: 0px 10px 30px hsl(188, 59%, 21%);
+}
+
+.user_header {
+	background-position: 0px 0px;
+	background-repeat: no-repeat;
+	background-size: contain;
+	text-align: center;
+	border-top-left-radius: 14px;
+	border-top-right-radius: 14px;
+}
+
+.user_img {
+	margin: auto;
+	width: 100px;
+	border: solid rgba(50, 47, 47, 0.618) 4px;
+	border-radius: 50%;
+	margin-top: 75px;
+}
+
+.bold-text {
+	font-weight: bold;
+	font-size: 1.1rem;
+	text-align: center;
+	padding: 10px 20px 0px 20px;
+}
+
+.normal-text {
+	font-weight: normal;
+	font-size: 0.95rem;
+	color: rgba(228, 218, 218, 0.618);
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+/* SOCIAL STATS */
+.smaller-text {
+	font-weight: normal;
+	font-size: 0.7rem;
+	color: rgba(228, 218, 218, 0.618);
+	text-align: center;
+	letter-spacing: 1px;
+	padding-bottom: 20px;
+	line-height: 5px;
+}
+
+.social-container {
+	display: flex;
+	border-top: solid rgba(50, 47, 47, 0.618);
+	text-align: center;
+}
+
+.followers {
+	flex: 1;
+}
+
+.likes {
+	flex: 1;
+}
+
+.photos {
+	flex: 1;
+}

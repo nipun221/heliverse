@@ -30,25 +30,25 @@ export default function CreateUser() {
     e.preventDefault();
     if (values.first_name && values.last_name && values.email && values.gender && values.avatar && values.domain && values.available) {
       setValid(true);
+      try {
+        const requestData = {
+          first_name: values.first_name,
+          last_name: values.last_name,
+          email: values.email,
+          gender: values.gender,
+          avatar: values.avatar,
+          domain: values.domain,
+          available: Boolean(values.available),
+        };
+      
+        const response = await Mockdata.post(`/`, requestData);
+      
+        console.log("POST request successful");
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error sending POST request:", error);
+      }    
     }
-    try {
-      const requestData = {
-        first_name: values.first_name,
-        last_name: values.last_name,
-        email: values.email,
-        gender: values.gender,
-        avatar: values.avatar,
-        domain: values.domain,
-        available: Boolean(values.available),
-      };
-    
-      const response = await Mockdata.post(`/`, requestData);
-    
-      console.log("POST request successful");
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error sending POST request:", error);
-    }    
     setSubmitted(true);
   };
 
