@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Sidebar from '../components/Sidebar'
-import CreateUser from '../components/CreateUser';
+import UpdateUser from '../components/UpdateUser';
 
-const Form = () => {
+const UpdateForm = () => {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
@@ -14,10 +14,10 @@ const Form = () => {
         OpenSidebar={OpenSidebar} 
       />
       <div className='main'>
-        <CreateUser />
+        <UpdateUser />
       </div>
     </div>
   )
 }
 
-export default Form
+export default UpdateForm

@@ -5,6 +5,7 @@ import DomainFilter from './pages/DomainFilter';
 import AvailabilityFilter from './pages/AvailabilityFilter';
 import UserDetails from './pages/UserDetails';
 import Form from './pages/Form';
+import UpdateForm from './pages/UpdateForm';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/availabilityFilter" element={<AvailabilityFilter/>}/>
         <Route exact path="/createuser" element={<Form/>}/>
         <Route exact path="/userDetails/:id" element={<UserDetails/>}/>
+        <Route exact path="/updateUser/:id" element={<UpdateForm/>}/>
       </Routes>
     </Router>
   )

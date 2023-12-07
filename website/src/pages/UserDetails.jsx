@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Mockdata from '../apis/Mockdata';
 
 const UserDetails = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
@@ -24,6 +25,25 @@ const UserDetails = () => {
 
     fetchData();
   }, [id]);
+
+  const handleUpdate = () => {
+    navigate(`/updateUser/${id}`);
+  };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this user?');
+    if (confirmDelete) {
+      try {
+        const response = await Mockdata.delete(`/${id}`);
+        console.log(response.data.users);
+      } catch (err) {
+        console.log(err);
+      }
+      navigate('/');
+    } else {
+      navigate(`/userDetails/${id}`);
+    }
+  };
 
   return (
     <div className='grid-container'>
@@ -53,6 +73,14 @@ const UserDetails = () => {
               <h1 className="bold-text">{userDetails?.available ? 'Yes' : 'No'}</h1>
               <h2 className="smaller-text">Available</h2>
             </div>
+          </div>
+          <div className='button-container'>
+            <button className="cssbuttons-io" onClick={handleUpdate}>
+              <span> Update</span>
+            </button>
+            <button className="cssbuttons-io-delete" onClick={handleDelete}>
+              <span> Delete</span>
+            </button>
           </div>
         </div>
       </div>
