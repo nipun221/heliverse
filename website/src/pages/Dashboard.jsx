@@ -4,19 +4,24 @@ import Sidebar from '../components/Sidebar'
 import Home from '../components/Home'
 
 const Dashboard = () => {
-    const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSearchValueChange = (value) => {
+    setSearchValue(value);
+  };
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
   return (
     <div className='grid-container'>
-      <Header OpenSidebar={OpenSidebar}/>
+      <Header OpenSidebar={OpenSidebar} searchValue={searchValue} setSearchValue={setSearchValue} onSearchValueChange={handleSearchValueChange}/>
       <Sidebar 
         openSidebarToggle={openSidebarToggle} 
         OpenSidebar={OpenSidebar} 
       />
-      <Home />
+      <Home searchValue={searchValue}/>
     </div>
   )
 }

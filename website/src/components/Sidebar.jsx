@@ -6,8 +6,7 @@ import
     BsFilter,
     BsFilterCircle,
     BsGrid1X2Fill, 
-    BsPerson,
-    BsSearch, 
+    BsPerson 
 }
  from 'react-icons/bs'
 
@@ -27,9 +26,6 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                 <form>
                     <li className='sidebar-list-item'>
                         <a href='/'><span className='icon'><BsGrid1X2Fill/></span> <span>Dashboard</span></a>
-                    </li>
-                    <li className='sidebar-list-item'>
-                        <a href='/'><span className='icon'><BsSearch/></span> <span>Search</span></a>
                     </li>
                     <li className='sidebar-list-item'>
                         <a href='/domainFilter'><span className='icon'><BsFilter/></span> <span>Filter (by domain)</span></a>

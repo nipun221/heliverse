@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import 
  { BsJustify, BsGithub }
  from 'react-icons/bs'
-import { useState } from 'react';
 
-function Header({OpenSidebar}) {
-    const [searchValue, setSearchValue] = useState('');
+function Header({OpenSidebar, searchValue, setSearchValue, onSearchValueChange}) {
 
     const handleInputChange = (event) => {
-        setSearchValue(event.target.value);
+        const value = event.target.value;
+        setSearchValue(value);
+        onSearchValueChange(value);
     };
 
     const handleSearch = () => {
@@ -48,6 +48,9 @@ function Header({OpenSidebar}) {
 
 Header.propTypes = {
     OpenSidebar: PropTypes.func.isRequired,
+    searchValue: PropTypes.string.isRequired,
+    setSearchValue: PropTypes.func.isRequired,
+    onSearchValueChange: PropTypes.func.isRequired,
 };
 
 export default Header

@@ -13,6 +13,7 @@ import Mockdata from '../apis/Mockdata'
 import { Pagination } from '@mui/material'
 import { Link } from 'react-router-dom'
 import InfoIcon from '@mui/icons-material/Info';
+import PropTypes from 'prop-types';
   
 const statusObj = {
 false: { color: 'error' },
@@ -20,15 +21,21 @@ true: { color: 'success' }
 }
   
 
-function Home() {
-    const [rows, setRows] = useState([]);
+function Home({ searchValue }) {
+  const [rows, setRows] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  console.log(searchValue);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Mockdata.get(`?page=${currentPage}`);
+        let endpoint = `?page=${currentPage}`;
+      
+        if (searchValue) {
+          endpoint = `/search/${searchValue}${endpoint}`;
+        }
+        const response = await Mockdata.get(endpoint);
         console.log(response.data.users);
         setRows(response.data.users);
         setTotalPages(response.data.totalPages);
@@ -38,7 +45,7 @@ function Home() {
     };
 
     fetchData();
-  }, [currentPage, setRows, setTotalPages]);
+  }, [searchValue, currentPage, setRows, setTotalPages]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -112,5 +119,9 @@ function Home() {
     </main>
   )
 }
+
+Home.propTypes = {
+    searchValue: PropTypes.string.isRequired,
+};
 
 export default Home
