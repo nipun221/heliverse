@@ -240,7 +240,7 @@ app.get('/api/users/available/:available', async (request, response) => {
 // GET request to retrieve all users by gender
 app.get('/api/users/gender/:gender', async (request, response) => {
   try {
-    const gender = request.params.available;
+    const gender = request.params.gender;
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
     const pageSize = parseInt(request.query.pageSize) || 20; // Get the page size from query parameters, default to 20
 
