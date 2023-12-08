@@ -13,8 +13,8 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Dashboard/>} />
-        <Route exact path="/domainFilter" element={<DomainFilter/>}/>
-        <Route exact path="/availabilityFilter" element={<AvailabilityFilter/>}/>
+        <Route exact path="/filter/domain" element={<DomainFilter/>}/>
+        <Route exact path="/filter/availability" element={<AvailabilityFilter/>}/>
         <Route exact path="/filter/gender" element={<GenderFilter/>}/>
         <Route exact path="/createuser" element={<Form/>}/>
         <Route exact path="/userDetails/:id" element={<UserDetails/>}/>

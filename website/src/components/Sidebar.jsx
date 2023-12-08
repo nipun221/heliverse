@@ -28,10 +28,10 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                         <a href='/'><span className='icon'><BsGrid1X2Fill/></span> <span>Dashboard</span></a>
                     </li>
                     <li className='sidebar-list-item'>
-                        <a href='/domainFilter'><span className='icon'><BsFilter/></span> <span>Filter (by domain)</span></a>
+                        <a href='/filter/domain'><span className='icon'><BsFilter/></span> <span>Filter (by domain)</span></a>
                     </li>
                     <li className='sidebar-list-item'>
-                        <a href='/availabilityFilter'><span className='icon'><BsFilterCircle/></span> <span>Filter (by availability)</span></a>
+                        <a href='/filter/availability'><span className='icon'><BsFilterCircle/></span> <span>Filter (by availability)</span></a>
                     </li>
                     <li className='sidebar-list-item'>
                         <a href='/filter/gender'><span className='icon'><BsFilterCircle/></span> <span>Filter (by gender)</span></a>
