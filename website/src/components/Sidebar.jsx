@@ -34,7 +34,7 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                         <a href='/availabilityFilter'><span className='icon'><BsFilterCircle/></span> <span>Filter (by availability)</span></a>
                     </li>
                     <li className='sidebar-list-item'>
-                        <a href='/Filter/Gender'><span className='icon'><BsFilterCircle/></span> <span>Filter (by gender)</span></a>
+                        <a href='/filter/gender'><span className='icon'><BsFilterCircle/></span> <span>Filter (by gender)</span></a>
                     </li>
                     <li className='sidebar-list-item'>
                         <a href='/createUser'><span className='icon'><BsPerson/></span> <span>Create User</span></a>
