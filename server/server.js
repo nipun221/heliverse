@@ -237,6 +237,48 @@ app.get('/api/users/available/:available', async (request, response) => {
   }
 });
 
+// GET request to retrieve all users by gender
+app.get('/api/users/gender/:gender', async (request, response) => {
+  try {
+    const gender = request.params.available;
+    const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
+    const pageSize = parseInt(request.query.pageSize) || 20; // Get the page size from query parameters, default to 20
+
+    const query = {
+      gender: gender,
+    };
+
+    const totalUsers = await Mockdata.countDocuments(query);
+    const totalPages = Math.ceil(totalUsers / pageSize);
+
+    const users = await Mockdata.find(query)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize);
+
+    const numberOfUsers = users.length;
+
+    const nextPage = page < totalPages ? page + 1 : null;
+    const prevPage = page > 1 ? page - 1 : null;
+
+    const links = {
+      self: `api/users/gender/${gender}?page=${page}`,
+      next: nextPage ? `api/users/gender/${gender}?page=${nextPage}&pageSize=${pageSize}` : null,
+      prev: prevPage ? `api/users/gender/${gender}?page=${prevPage}&pageSize=${pageSize}` : null,
+    };
+
+    return response.status(200).json({
+      numberOfUsers: numberOfUsers,
+      totalPages: totalPages,
+      currentPage: page,
+      users: users,
+      links: links,
+    });
+  } catch (error) {
+    console.error(error);
+    return response.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 // GET request to search users by string
