@@ -25,7 +25,7 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
             <div className="container">
                 <form>
                     <li className='sidebar-list-item'>
-                        <a href='/'><span className='icon'><BsGrid1X2Fill/></span> <span>Dashboard</span></a>
+                        <a href='/dashboard'><span className='icon'><BsGrid1X2Fill/></span> <span>Dashboard</span></a>
                     </li>
                     <li className='sidebar-list-item'>
                         <a href='/filter/domain'><span className='icon'><BsFilter/></span> <span>Filter (by domain)</span></a>

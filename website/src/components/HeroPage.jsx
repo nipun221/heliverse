@@ -27,10 +27,15 @@ function HeroPage({OpenSidebar}) {
   const [rows, setRows] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const token = localStorage.getItem('token');
 
   const handleFetchData = async () => {
     try {
-      const response = await Mockdata.get(`/gender/${domain}?page=${currentPage}`);
+      const response = await Mockdata.get(`/gender/${domain}?page=${currentPage}`, {
+        headers: {
+          'Authorization': `${token}`,
+        }
+      });
       setRows(response.data.users);
       setTotalPages(response.data.totalPages);
     } catch (err) {

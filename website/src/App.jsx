@@ -7,12 +7,16 @@ import UserDetails from './pages/UserDetails';
 import Form from './pages/Form';
 import UpdateForm from './pages/UpdateForm';
 import GenderFilter from './pages/GenderFilter';
+import Register from './pages/Register';
+import Login from './pages/Login';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Dashboard/>} />
+        <Route exact path="/register" element={<Register/>}/>
+        <Route default exact path="/" element={<Login/>}/>
+        <Route exact path="/dashboard" element={<Dashboard/>} />
         <Route exact path="/filter/domain" element={<DomainFilter/>}/>
         <Route exact path="/filter/availability" element={<AvailabilityFilter/>}/>
         <Route exact path="/filter/gender" element={<GenderFilter/>}/>

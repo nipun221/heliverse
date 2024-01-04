@@ -2,6 +2,7 @@ import { useState } from "react";
 import Mockdata from "../apis/Mockdata";
 
 export default function CreateUser() {
+  const token = localStorage.getItem('token');
   const [values, setValues] = useState({
     first_name: "",
     last_name: "",
@@ -41,7 +42,11 @@ export default function CreateUser() {
           available: Boolean(values.available),
         };
       
-        const response = await Mockdata.post(`/`, requestData);
+        const response = await Mockdata.post(`/`, requestData, {
+          headers: {
+            'Authorization': `${token}`, 
+          }
+        });
       
         console.log("POST request successful");
         console.log("Response:", response.data);

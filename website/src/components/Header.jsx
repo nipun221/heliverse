@@ -2,10 +2,13 @@ import { Link } from '@mui/material';
 import '../styles/Header.css'
 import PropTypes from 'prop-types';
 import 
- { BsJustify, BsGithub }
+ { BsJustify, BsGithub, BsSaveFill }
  from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom';
 
 function Header({OpenSidebar, searchValue, setSearchValue, onSearchValueChange}) {
+
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const value = event.target.value;
@@ -22,6 +25,11 @@ function Header({OpenSidebar, searchValue, setSearchValue, onSearchValueChange})
           handleSearch();
         }
     };
+
+    const onLogout = () => {
+        localStorage.removeItem("token");
+        navigate(`/`);
+    }
 
     return (
         <header className='header'>
@@ -41,6 +49,7 @@ function Header({OpenSidebar, searchValue, setSearchValue, onSearchValueChange})
             <Link href="https://github.com/nipun221/heliverse" target="_blank" rel="noopener noreferrer">
                 <BsGithub className='icon' />
             </Link>
+            <Link href='/'><BsSaveFill className='icon' onClick={onLogout} /></Link>
             </div>
         </header>
     )

@@ -11,6 +11,7 @@ const UserDetails = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
   const [userDetails, setUserDetails] = useState({});
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +35,11 @@ const UserDetails = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
     if (confirmDelete) {
       try {
-        const response = await Mockdata.delete(`/${id}`);
+        const response = await Mockdata.delete(`/${id}`, {
+          headers: {
+            'Authorization': `${token}`,
+          }
+        });
         console.log(response.data.users);
       } catch (err) {
         console.log(err);

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 export default function UpdateUser() {
     const { id } = useParams();
     console.log(id);
+    const token = localStorage.getItem('token');
     const [values, setValues] = useState({
         first_name: "",
         last_name: "",
@@ -44,7 +45,11 @@ export default function UpdateUser() {
             available: Boolean(values.available),
             };
         
-            const response = await Mockdata.put(`/${id}`, requestData);
+            const response = await Mockdata.put(`/${id}`, requestData, {
+                headers: {
+                    'Authorization': `${token}`,
+                }
+            });
         
             console.log("PUT request successful");
             console.log("Response:", response.data);

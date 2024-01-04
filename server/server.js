@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cors = require("cors");
+const { body, validationResult } = require('express-validator');
 
 const app = express();
 app.use(express.json());
@@ -32,11 +35,116 @@ const mockdataSchema = new mongoose.Schema({
   available: Boolean,
 });
 
+// Define user schema
+const userSchema = new mongoose.Schema({
+  username: {
+      type: String,
+      required: true,
+      unique: true,
+      minlength: 3,
+  },
+  email: {    
+      type: String,
+      required: true,
+      unique: true,
+  },
+  passwordHash: {
+      type: String,
+      required: true,
+  },
+});
+
+// Hash password before saving user to database
+userSchema.pre('save', async function(next) {
+  const user = this;
+  const hash = await bcrypt.hash(user.passwordHash, 10);
+  user.passwordHash = hash;
+  next();
+});
+
+// Define user model
+const User = mongoose.model('User', userSchema);
+
 // Create a Mongoose model based on the schema
 const Mockdata = mongoose.model('mockdata', mockdataSchema);
 
+// JWT secret key
+const jwtSecretKey = process.env.JWT_SECRET || 'secret';
+
+// Middleware to authenticate user
+function authenticateToken(req, res, next) {
+  const token = req.header('Authorization');
+
+  if (!token) {
+      return res.status(401).json({ error: 'Unauthorized: Token not provided' });
+  }
+
+  jwt.verify(token, jwtSecretKey, (err, user) => {
+      if (err) {
+          return res.status(403).json({ error: 'Forbidden: Invalid token' });
+      }
+
+      req.user = user;
+      next();
+  });
+}
+
+// User registration
+app.post('/api/users/register', [
+  body('username').isLength({ min: 3 }),
+  body('email').isEmail(),
+  body('password').isLength({ min: 8 }),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(422).json({ error: 'Invalid data' });
+  }
+
+  const { username, email, password } = req.body;
+
+  try {
+      const user = new User({
+          username: username,
+          email: email,
+          passwordHash: password,
+      });
+      await user.save();
+      res.status(201).json({ message: 'User created' });
+  } catch (err) {
+      res.status(400).json({ error: 'Bad request' });
+  }
+});
+
+// User login 
+app.post('/api/users/login', [
+  body('username').isLength({ min: 3 }),
+  body('password').isLength({ min: 8 }),
+], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return res.status(422).json({ error: 'Invalid data' });
+  }
+
+  const { username, password } = req.body;
+
+  try {
+      const user = await User.findOne({ username: username });
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+      if (await bcrypt.compare(password, user.passwordHash)) {
+          const accessToken = jwt.sign({ username: user.username }, jwtSecretKey);
+          res.status(200).json({ username: user.username, email: user.email, accessToken: accessToken });
+      } else {
+          res.status(401).json({ error: 'Unauthorized: Invalid username or password' });
+      }
+  } catch (err) {
+      res.status(400).json({ error: 'Bad request' });
+  }
+});
+
 // GET request to retrieve all users
-app.get('/api/users', async (request, response) => {
+app.get('/api/users', authenticateToken, async (request, response) => {
   try {
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
     const pageSize = 20; // Number of users per page
@@ -74,7 +182,7 @@ app.get('/api/users', async (request, response) => {
 
 
 // POST request to create a new user
-app.post('/api/users', async (request, response) => {
+app.post('/api/users', authenticateToken, async (request, response) => {
   try {
     const users = await Mockdata.find({});
     const numberOfUsers = users.length;
@@ -106,7 +214,7 @@ app.post('/api/users', async (request, response) => {
 });
 
 // GET request to retrieve a user by ID
-app.get('/api/users/:id', async (request, response) => {
+app.get('/api/users/:id', authenticateToken, async (request, response) => {
   try {
     const user = await Mockdata.findOne({ id: request.params.id });
     if (!user) {
@@ -120,7 +228,7 @@ app.get('/api/users/:id', async (request, response) => {
 });
 
 // PUT request to update a user by ID
-app.put('/api/users/:id', async (request, response) => {
+app.put('/api/users/:id', authenticateToken, async (request, response) => {
   try {
     const user = await Mockdata.findOneAndUpdate(
       { id: request.params.id },
@@ -138,7 +246,7 @@ app.put('/api/users/:id', async (request, response) => {
 });
 
 // DELETE request to delete a user by ID
-app.delete('/api/users/:id', async (request, response) => {
+app.delete('/api/users/:id', authenticateToken, async (request, response) => {
   try {
     const user = await Mockdata.findOneAndDelete({ id: request.params.id });
     if (!user) {
@@ -152,7 +260,7 @@ app.delete('/api/users/:id', async (request, response) => {
 });
 
 // GET request to retrieve all users by domain
-app.get('/api/users/domain/:domain', async (request, response) => {
+app.get('/api/users/domain/:domain', authenticateToken, async (request, response) => {
   try {
     const domain = request.params.domain;
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
@@ -196,7 +304,7 @@ app.get('/api/users/domain/:domain', async (request, response) => {
 
 
 // GET request to retrieve all users by availability
-app.get('/api/users/available/:available', async (request, response) => {
+app.get('/api/users/available/:available', authenticateToken, async (request, response) => {
   try {
     const available = request.params.available;
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
@@ -238,7 +346,7 @@ app.get('/api/users/available/:available', async (request, response) => {
 });
 
 // GET request to retrieve all users by gender
-app.get('/api/users/gender/:gender', async (request, response) => {
+app.get('/api/users/gender/:gender', authenticateToken, async (request, response) => {
   try {
     const gender = request.params.gender;
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1
@@ -282,7 +390,7 @@ app.get('/api/users/gender/:gender', async (request, response) => {
 
 
 // GET request to search users by string
-app.get('/api/users/search/:string', async (request, response) => {
+app.get('/api/users/search/:string', authenticateToken, async (request, response) => {
   try {
     const search = request.params.string || ''; // Use an empty string if no search word is provided
     const page = parseInt(request.query.page) || 1; // Get the page number from query parameters, default to page 1

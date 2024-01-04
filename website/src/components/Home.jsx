@@ -27,6 +27,8 @@ function Home({ searchValue }) {
   const [totalPages, setTotalPages] = useState(1);
   console.log(searchValue);
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,7 +37,11 @@ function Home({ searchValue }) {
         if (searchValue) {
           endpoint = `/search/${searchValue}${endpoint}`;
         }
-        const response = await Mockdata.get(endpoint);
+        const response = await Mockdata.get(endpoint, {
+          headers: {
+            'Authorization': `${token}`,
+          },
+        });
         console.log(response.data.users);
         setRows(response.data.users);
         setTotalPages(response.data.totalPages);
@@ -45,7 +51,7 @@ function Home({ searchValue }) {
     };
 
     fetchData();
-  }, [searchValue, currentPage, setRows, setTotalPages]);
+  }, [searchValue, currentPage, setRows, setTotalPages, token]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
