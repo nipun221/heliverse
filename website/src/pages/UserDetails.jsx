@@ -16,7 +16,11 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Mockdata.get(`/${id}`);
+        const response = await Mockdata.get(`/${id}`, {
+          headers: {
+            'Authorization': `${token}`,
+          }
+        });
         console.log(response.data);
         setUserDetails(response.data);
       } catch (err) {
