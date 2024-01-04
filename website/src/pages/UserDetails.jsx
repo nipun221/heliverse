@@ -48,7 +48,7 @@ const UserDetails = () => {
       } catch (err) {
         console.log(err);
       }
-      navigate('/');
+      navigate('/dashboard');
     } else {
       navigate(`/userDetails/${id}`);
     }
